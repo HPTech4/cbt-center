@@ -54,20 +54,47 @@ export default function Login() {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
-      {/* Educational Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800">
-        {/* Animated geometric shapes */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-blue-400/5 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      {/* Educational Background with Illustration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-blue-800 to-cyan-700">
+        {/* Overlay for better contrast */}
+        <div className="absolute inset-0 bg-black/30"></div>
         
-        {/* Floating book icons */}
-        <div className="absolute top-1/4 right-1/4 opacity-10">
-          <BookOpen className="w-24 h-24 text-white animate-bounce" style={{animationDuration: '3s'}} />
+        {/* Illustrative elements representing students and education */}
+        <div className="absolute inset-0 opacity-10">
+          {/* Desk rows (representing classroom) */}
+          <div className="absolute top-1/4 left-10 w-32 h-24 border-4 border-white rounded-lg"></div>
+          <div className="absolute top-1/4 right-10 w-32 h-24 border-4 border-white rounded-lg"></div>
+          <div className="absolute bottom-1/3 left-20 w-28 h-20 border-4 border-white rounded-lg"></div>
+          <div className="absolute bottom-1/3 right-20 w-28 h-20 border-4 border-white rounded-lg"></div>
+          
+          {/* Student silhouettes (simplified) */}
+          <div className="absolute top-1/3 left-1/4">
+            <div className="w-12 h-12 bg-white rounded-full"></div>
+            <div className="w-20 h-32 bg-white rounded-t-full mt-2"></div>
+          </div>
+          <div className="absolute top-1/2 right-1/3">
+            <div className="w-10 h-10 bg-white rounded-full"></div>
+            <div className="w-16 h-28 bg-white rounded-t-full mt-2"></div>
+          </div>
+          
+          {/* Computer/exam screens */}
+          <div className="absolute bottom-1/4 left-1/3 w-40 h-28 bg-white/20 rounded-lg border-4 border-white">
+            <div className="w-full h-4 bg-white mt-2"></div>
+            <div className="w-3/4 h-3 bg-white mt-2 ml-2"></div>
+            <div className="w-2/3 h-3 bg-white mt-2 ml-2"></div>
+          </div>
+          
+          {/* Pencils and papers scattered */}
+          <div className="absolute top-1/2 left-10 w-2 h-20 bg-white rotate-45"></div>
+          <div className="absolute bottom-20 right-1/4 w-2 h-20 bg-white -rotate-12"></div>
+          <div className="absolute top-20 right-10 w-24 h-32 bg-white/30 rounded transform rotate-12"></div>
         </div>
-        <div className="absolute bottom-1/4 left-1/4 opacity-10">
-          <GraduationCap className="w-32 h-32 text-white animate-bounce" style={{animationDuration: '4s', animationDelay: '1s'}} />
-        </div>
+        
+        {/* Subtle floating particles */}
+        <div className="absolute top-20 left-10 w-2 h-2 bg-white/40 rounded-full animate-ping"></div>
+        <div className="absolute top-40 right-20 w-2 h-2 bg-white/40 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-32 left-1/4 w-2 h-2 bg-white/40 rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 right-1/3 w-2 h-2 bg-white/40 rounded-full animate-ping" style={{animationDelay: '1.5s'}}></div>
       </div>
 
       <div className="w-full max-w-md relative z-10">
