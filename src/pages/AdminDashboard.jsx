@@ -16,7 +16,8 @@ import {
   GraduationCap,
   TrendingUp,
   ClipboardList,
-  Award
+  Award,
+  Menu
 } from 'lucide-react'
 import {
   getExams,
@@ -43,6 +44,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   // Data states
   const [exams, setExams] = useState([])
@@ -310,31 +312,90 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 shadow-sm">
+      <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <GraduationCap className="w-7 h-7 text-white" />
               </div>
-              <div>
+              <div className="hidden sm:block">
                 <h1 className="text-2xl font-bold text-slate-900">Prime Scholar</h1>
                 <p className="text-sm text-slate-600">Admin Dashboard • Welcome, {user?.full_name}</p>
               </div>
+              <div className="sm:hidden">
+                <h1 className="text-xl font-bold text-slate-900">Prime Scholar</h1>
+                <p className="text-xs text-slate-600">Admin</p>
+              </div>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors font-medium text-slate-700"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="hidden sm:inline">Logout</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleLogout}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors font-medium text-slate-700"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>Logout</span>
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-6 h-6 text-slate-900" />
+                ) : (
+                  <Menu className="w-6 h-6 text-slate-900" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Tabs */}
-      <div className="bg-white shadow-sm">
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-b border-slate-200 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 py-4 space-y-2">
+            {[
+              { key: 'exams', icon: Award, label: 'Exams' },
+              { key: 'subjects', icon: BookOpen, label: 'Subjects' },
+              { key: 'questions', icon: ClipboardList, label: 'Questions' },
+              { key: 'results', icon: BarChart3, label: 'Results' }
+            ].map((tab) => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => {
+                    setActiveTab(tab.key)
+                    setMobileMenuOpen(false)
+                  }}
+                  className={`w-full flex items-center gap-2 px-4 py-3 font-medium rounded-lg transition-all ${
+                    activeTab === tab.key
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {tab.label}
+                </button>
+              )
+            })}
+            <button
+              onClick={() => {
+                handleLogout()
+                setMobileMenuOpen(false)
+              }}
+              className="w-full flex items-center gap-2 px-4 py-3 font-medium text-red-600 hover:bg-red-50 rounded-lg transition-all"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Tabs */}
+      <div className="hidden md:block bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-2 overflow-x-auto">
             {[
@@ -364,23 +425,23 @@ export default function AdminDashboard() {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Alerts */}
         {error && (
-          <div className="mb-6 flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p>{error}</p>
-            <button onClick={() => setError('')} className="ml-auto">
+          <div className="mb-6 flex items-start sm:items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm sm:text-base">
+            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" />
+            <p className="flex-1">{error}</p>
+            <button onClick={() => setError('')} className="ml-auto flex-shrink-0">
               <X className="w-4 h-4" />
             </button>
           </div>
         )}
         
         {success && (
-          <div className="mb-6 flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-            <Check className="w-5 h-5 flex-shrink-0" />
-            <p>{success}</p>
-            <button onClick={() => setSuccess('')} className="ml-auto">
+          <div className="mb-6 flex items-start sm:items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm sm:text-base">
+            <Check className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" />
+            <p className="flex-1">{success}</p>
+            <button onClick={() => setSuccess('')} className="ml-auto flex-shrink-0">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -390,73 +451,73 @@ export default function AdminDashboard() {
         {activeTab === 'exams' && (
           <div>
             {/* Statistics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-slate-600 mb-1">Total Exams</p>
-                    <p className="text-3xl font-bold text-slate-900">{exams.length}</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+              <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-slate-600 mb-1">Total Exams</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-slate-900">{exams.length}</p>
                   </div>
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Award className="w-6 h-6 text-blue-600" />
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-slate-600 mb-1">Subjects</p>
-                    <p className="text-3xl font-bold text-slate-900">{subjects.length}</p>
-                  </div>
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <BookOpen className="w-6 h-6 text-green-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                    <Award className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                   </div>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-slate-600 mb-1">Total Attempts</p>
-                    <p className="text-3xl font-bold text-slate-900">{attempts.length}</p>
+              <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-slate-600 mb-1">Subjects</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-slate-900">{subjects.length}</p>
                   </div>
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                    <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
                   </div>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-slate-600 mb-1">Questions</p>
-                    <p className="text-3xl font-bold text-slate-900">{subjectQuestions.length}</p>
+              <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-slate-600 mb-1">Attempts</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-slate-900">{attempts.length}</p>
                   </div>
-                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <ClipboardList className="w-6 h-6 text-orange-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-slate-600 mb-1">Questions</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-slate-900">{subjectQuestions.length}</p>
+                  </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                    <ClipboardList className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">Manage Exams</h2>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Manage Exams</h2>
               <button
                 onClick={() => setShowExamModal(true)}
-                className="btn-primary flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
+                className="btn-primary w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 shadow-lg hover:shadow-xl transition-shadow text-sm sm:text-base"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Add Exam</span>
               </button>
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-3 sm:gap-4">
               {exams.map((exam) => (
                 <div key={exam.id} className="card hover:shadow-lg transition-shadow cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-md">
-                        <Award className="w-6 h-6 text-white" />
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex-shrink-0 flex items-center justify-center shadow-md">
+                        <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <h3 className="text-lg font-bold text-slate-900">{exam.name}</h3>
                         {exam.description && (
                           <p className="text-sm text-slate-600 mt-1">{exam.description}</p>
@@ -611,8 +672,8 @@ export default function AdminDashboard() {
         {/* Results Tab */}
         {activeTab === 'results' && (
           <div>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">Student Results</h2>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Student Results</h2>
               <div className="flex items-center gap-2 text-sm text-slate-600">
                 <BarChart3 className="w-4 h-4" />
                 <span>Total Attempts: {attempts.length}</span>
@@ -620,15 +681,15 @@ export default function AdminDashboard() {
             </div>
 
             <div className="card overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-slate-200">
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Student</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Exam</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Subject</th>
-                    <th className="text-center py-3 px-4 text-sm font-semibold text-slate-700">Score</th>
-                    <th className="text-center py-3 px-4 text-sm font-semibold text-slate-700">Percentage</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Date</th>
+                    <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-slate-700 whitespace-nowrap">Student</th>
+                    <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-slate-700 whitespace-nowrap">Exam</th>
+                    <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-slate-700 whitespace-nowrap">Subject</th>
+                    <th className="text-center py-2 sm:py-3 px-2 sm:px-4 font-semibold text-slate-700 whitespace-nowrap">Score</th>
+                    <th className="text-center py-2 sm:py-3 px-2 sm:px-4 font-semibold text-slate-700 whitespace-nowrap">%</th>
+                    <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-slate-700 whitespace-nowrap">Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -636,13 +697,13 @@ export default function AdminDashboard() {
                     const percentage = Math.round((attempt.score / attempt.total_questions) * 100)
                     return (
                       <tr key={attempt.id} className="border-b border-slate-100 hover:bg-slate-50">
-                        <td className="py-3 px-4 text-sm">{attempt.users?.full_name}</td>
-                        <td className="py-3 px-4 text-sm">{attempt.subjects?.exams?.name}</td>
-                        <td className="py-3 px-4 text-sm">{attempt.subjects?.name}</td>
-                        <td className="py-3 px-4 text-sm text-center font-medium">
+                        <td className="py-2 sm:py-3 px-2 sm:px-4 truncate">{attempt.users?.full_name}</td>
+                        <td className="py-2 sm:py-3 px-2 sm:px-4 truncate">{attempt.subjects?.exams?.name}</td>
+                        <td className="py-2 sm:py-3 px-2 sm:px-4 truncate">{attempt.subjects?.name}</td>
+                        <td className="py-2 sm:py-3 px-2 sm:px-4 text-center font-medium whitespace-nowrap">
                           {attempt.score}/{attempt.total_questions}
                         </td>
-                        <td className="py-3 px-4 text-center">
+                        <td className="py-2 sm:py-3 px-2 sm:px-4 text-center">
                           <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
                             percentage >= 75 ? 'bg-green-100 text-green-700' :
                             percentage >= 60 ? 'bg-blue-100 text-blue-700' :
@@ -652,7 +713,7 @@ export default function AdminDashboard() {
                             {percentage}%
                           </span>
                         </td>
-                        <td className="py-3 px-4 text-sm text-slate-600">
+                        <td className="py-2 sm:py-3 px-2 sm:px-4 text-slate-600 whitespace-nowrap text-xs sm:text-sm">
                           {new Date(attempt.submitted_at).toLocaleDateString()}
                         </td>
                       </tr>
@@ -667,10 +728,10 @@ export default function AdminDashboard() {
 
       {/* Add Exam Modal */}
       {showExamModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-4 sm:p-6 my-auto">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-slate-900">Add New Exam</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900">Add New Exam</h3>
               <button onClick={() => setShowExamModal(false)}>
                 <X className="w-5 h-5 text-slate-400" />
               </button>
@@ -682,7 +743,7 @@ export default function AdminDashboard() {
                   <select
                     value={examForm.name}
                     onChange={(e) => setExamForm({ ...examForm, name: e.target.value })}
-                    className="input"
+                    className="input text-sm"
                     required
                   >
                     <option value="">-- Choose Exam --</option>

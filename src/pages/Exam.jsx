@@ -130,25 +130,25 @@ export default function Exam() {
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-start sm:items-center gap-2 sm:gap-3 min-w-0 flex-1">
+              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-lg flex-shrink-0 flex items-center justify-center shadow-md">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-lg font-bold text-slate-900">
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-lg font-bold text-slate-900 truncate">
                   {attempt?.subjects?.name}
                 </h1>
-                <p className="text-sm text-slate-600">
-                  Question {currentQuestionIndex + 1} of {questions.length}
+                <p className="text-xs sm:text-sm text-slate-600">
+                  Q{currentQuestionIndex + 1}/{questions.length}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="px-4 py-2 bg-blue-50 rounded-lg">
-                <span className="text-sm font-medium text-blue-900">
-                  Answered: {getAnsweredCount()}/{questions.length}
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              <div className="px-3 sm:px-4 py-2 bg-blue-50 rounded-lg flex-1 sm:flex-none">
+                <span className="text-xs sm:text-sm font-medium text-blue-900 whitespace-nowrap">
+                  {getAnsweredCount()}/{questions.length}
                 </span>
               </div>
               <Timer
@@ -162,17 +162,17 @@ export default function Exam() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         {error && (
-          <div className="mb-6 flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p>{error}</p>
+          <div className="mb-4 sm:mb-6 flex items-start sm:items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" />
+            <p className="flex-1">{error}</p>
           </div>
         )}
 
-        <div className="grid lg:grid-cols-4 gap-6">
+        <div className=\"grid lg:grid-cols-4 gap-3 sm:gap-6\">
           {/* Question Area */}
-          <div className="lg:col-span-3">
+          <div className=\"lg:col-span-3\">
             <QuestionCard
               question={currentQuestion}
               questionNumber={currentQuestionIndex + 1}
@@ -181,18 +181,18 @@ export default function Exam() {
             />
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between mt-6">
+            <div className=\"flex items-center justify-between gap-2 sm:gap-4 mt-4 sm:mt-6\">
               <button
                 onClick={handlePreviousQuestion}
                 disabled={currentQuestionIndex === 0}
-                className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+                className=\"btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex-1 text-sm sm:text-base\"
               >
                 Previous
               </button>
               <button
                 onClick={handleNextQuestion}
                 disabled={currentQuestionIndex === questions.length - 1}
-                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                className=\"btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex-1 text-sm sm:text-base\"
               >
                 Next
               </button>
@@ -200,15 +200,15 @@ export default function Exam() {
           </div>
 
           {/* Question Navigator Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="card sticky top-24">
-              <h3 className="font-semibold text-slate-900 mb-4">Questions</h3>
-              <div className="grid grid-cols-5 lg:grid-cols-4 gap-2 mb-6">
+          <div className=\"lg:col-span-1\">
+            <div className=\"card sticky top-24\">
+              <h3 className=\"font-semibold text-slate-900 mb-4 text-sm\">Questions</h3>
+              <div className=\"grid grid-cols-6 lg:grid-cols-4 gap-1 sm:gap-2 mb-4 sm:mb-6\">
                 {questions.map((q, index) => (
                   <button
                     key={q.id}
                     onClick={() => handleQuestionNavigate(index)}
-                    className={`w-full aspect-square rounded-lg font-medium text-sm transition-all ${
+                    className={`aspect-square rounded text-xs font-medium transition-all ${
                       index === currentQuestionIndex
                         ? 'bg-blue-600 text-white'
                         : answers[q.id]
@@ -224,10 +224,10 @@ export default function Exam() {
               <button
                 onClick={() => setShowSubmitConfirm(true)}
                 disabled={submitting}
-                className="btn-primary w-full flex items-center justify-center gap-2"
+                className=\"btn-primary w-full flex items-center justify-center gap-2 text-sm sm:text-base\"
               >
-                <Send className="w-5 h-5" />
-                <span>Submit Exam</span>
+                <Send className=\"w-4 h-4 sm:w-5 sm:h-5\" />
+                <span>Submit</span>
               </button>
             </div>
           </div>
@@ -236,43 +236,43 @@ export default function Exam() {
 
       {/* Submit Confirmation Modal */}
       {showSubmitConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="w-6 h-6 text-amber-600" />
+        <div className=\"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto\">
+          <div className=\"bg-white rounded-xl shadow-xl max-w-md w-full p-4 sm:p-6 my-auto\">
+            <div className=\"flex items-start gap-3 sm:gap-4 mb-6\">
+              <div className=\"w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0\">
+                <AlertCircle className=\"w-5 h-5 sm:w-6 sm:h-6 text-amber-600\" />
               </div>
-              <div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">
+              <div className=\"min-w-0 flex-1\">
+                <h3 className=\"text-base sm:text-lg font-bold text-slate-900 mb-2\">
                   Submit Exam?
                 </h3>
-                <p className="text-slate-600 text-sm">
-                  You have answered {getAnsweredCount()} out of {questions.length} questions.
+                <p className=\"text-slate-600 text-xs sm:text-sm\">
+                  You answered {getAnsweredCount()}/{questions.length}. Cannot change answers after.
                   Once submitted, you cannot change your answers.
                 </p>
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2 sm:gap-3">
               <button
                 onClick={() => setShowSubmitConfirm(false)}
                 disabled={submitting}
-                className="btn-secondary flex-1"
+                className="btn-secondary flex-1 text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleSubmitExam(false)}
                 disabled={submitting}
-                className="btn-primary flex-1 flex items-center justify-center gap-2"
+                className="btn-primary flex-1 flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 {submitting ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     <span>Submitting...</span>
                   </>
                 ) : (
                   <>
-                    <Check className="w-5 h-5" />
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Submit</span>
                   </>
                 )}
