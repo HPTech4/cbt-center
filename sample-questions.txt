@@ -1,0 +1,332 @@
+# Sample Questions for Testing
+# Copy and paste these into the Admin Dashboard Question Upload
+
+## Mathematics Questions
+
+Q: What is 15 + 27?
+A) 40
+B) 41
+C) 42
+D) 43
+ANSWER: C
+EXPLANATION: 15 plus 27 equals 42.
+
+Q: What is the square root of 144?
+A) 10
+B) 11
+C) 12
+D) 13
+ANSWER: C
+EXPLANATION: 12 multiplied by 12 equals 144.
+
+Q: If x + 5 = 12, what is the value of x?
+A) 5
+B) 6
+C) 7
+D) 8
+ANSWER: C
+EXPLANATION: Subtracting 5 from both sides: x = 12 - 5 = 7.
+
+Q: What is 25% of 200?
+A) 25
+B) 50
+C) 75
+D) 100
+ANSWER: B
+EXPLANATION: 25% of 200 = 0.25 × 200 = 50.
+
+Q: What is the next number in the sequence: 2, 4, 8, 16, ?
+A) 24
+B) 28
+C) 32
+D) 36
+ANSWER: C
+EXPLANATION: Each number is multiplied by 2. So 16 × 2 = 32.
+
+Q: What is the area of a rectangle with length 8cm and width 5cm?
+A) 13 cm²
+B) 26 cm²
+C) 40 cm²
+D) 80 cm²
+ANSWER: C
+EXPLANATION: Area = length × width = 8 × 5 = 40 cm².
+
+Q: What is 7 × 8?
+A) 54
+B) 56
+C) 64
+D) 72
+ANSWER: B
+EXPLANATION: 7 multiplied by 8 equals 56.
+
+Q: What is the value of 3² + 4²?
+A) 7
+B) 12
+C) 25
+D) 49
+ANSWER: C
+EXPLANATION: 3² = 9, 4² = 16, so 9 + 16 = 25.
+
+Q: If a triangle has angles of 60°, 70°, and x°, what is x?
+A) 40°
+B) 45°
+C) 50°
+D) 55°
+ANSWER: C
+EXPLANATION: Sum of angles in a triangle is 180°. So x = 180 - 60 - 70 = 50°.
+
+Q: What is 1000 ÷ 25?
+A) 25
+B) 30
+C) 35
+D) 40
+ANSWER: D
+EXPLANATION: 1000 divided by 25 equals 40.
+
+Q: What is the perimeter of a square with side length 6cm?
+A) 12 cm
+B) 18 cm
+C) 24 cm
+D) 36 cm
+ANSWER: C
+EXPLANATION: Perimeter of a square = 4 × side = 4 × 6 = 24 cm.
+
+Q: What is 3/4 as a percentage?
+A) 60%
+B) 70%
+C) 75%
+D) 80%
+ANSWER: C
+EXPLANATION: 3/4 = 0.75 = 75%.
+
+Q: What is the value of 2³?
+A) 6
+B) 8
+C) 9
+D) 10
+ANSWER: B
+EXPLANATION: 2³ = 2 × 2 × 2 = 8.
+
+Q: What is the LCM of 4 and 6?
+A) 10
+B) 12
+C) 18
+D) 24
+ANSWER: B
+EXPLANATION: The least common multiple of 4 and 6 is 12.
+
+Q: What is 0.5 + 0.25?
+A) 0.5
+B) 0.65
+C) 0.75
+D) 1.0
+ANSWER: C
+EXPLANATION: 0.5 plus 0.25 equals 0.75.
+
+Q: If y = 2x + 3 and x = 4, what is y?
+A) 9
+B) 10
+C) 11
+D) 12
+ANSWER: C
+EXPLANATION: y = 2(4) + 3 = 8 + 3 = 11.
+
+Q: What is the HCF of 12 and 18?
+A) 2
+B) 3
+C) 6
+D) 9
+ANSWER: C
+EXPLANATION: The highest common factor of 12 and 18 is 6.
+
+Q: What is 15% of 80?
+A) 10
+B) 11
+C) 12
+D) 13
+ANSWER: C
+EXPLANATION: 15% of 80 = 0.15 × 80 = 12.
+
+Q: What is the circumference of a circle with radius 7cm? (Use π = 22/7)
+A) 22 cm
+B) 44 cm
+C) 88 cm
+D) 154 cm
+ANSWER: B
+EXPLANATION: Circumference = 2πr = 2 × (22/7) × 7 = 44 cm.
+
+Q: What is 99 - 37?
+A) 52
+B) 56
+C) 62
+D) 66
+ANSWER: C
+EXPLANATION: 99 minus 37 equals 62.
+
+Q: What is the value of |−8|?
+A) -8
+B) 0
+C) 8
+D) 16
+ANSWER: C
+EXPLANATION: The absolute value of -8 is 8.
+
+Q: What is 12 × 12?
+A) 124
+B) 134
+C) 144
+D) 154
+ANSWER: C
+EXPLANATION: 12 multiplied by 12 equals 144.
+
+Q: What is the sum of the first 5 prime numbers?
+A) 26
+B) 28
+C) 30
+D) 32
+ANSWER: B
+EXPLANATION: The first 5 primes are 2, 3, 5, 7, 11. Sum = 2+3+5+7+11 = 28.
+
+Q: What is 5! (5 factorial)?
+A) 100
+B) 110
+C) 120
+D) 130
+ANSWER: C
+EXPLANATION: 5! = 5 × 4 × 3 × 2 × 1 = 120.
+
+Q: What is the slope of a line passing through (0,0) and (2,4)?
+A) 1
+B) 2
+C) 3
+D) 4
+ANSWER: B
+EXPLANATION: Slope = (y₂-y₁)/(x₂-x₁) = (4-0)/(2-0) = 4/2 = 2.
+
+Q: What is 3/5 + 1/5?
+A) 3/10
+B) 2/5
+C) 3/5
+D) 4/5
+ANSWER: D
+EXPLANATION: When adding fractions with the same denominator: 3/5 + 1/5 = 4/5.
+
+Q: What is the volume of a cube with side length 3cm?
+A) 9 cm³
+B) 18 cm³
+C) 27 cm³
+D) 36 cm³
+ANSWER: C
+EXPLANATION: Volume of cube = side³ = 3³ = 27 cm³.
+
+Q: What is 8 ÷ 0.4?
+A) 2
+B) 10
+C) 20
+D) 40
+ANSWER: C
+EXPLANATION: 8 ÷ 0.4 = 8 ÷ (4/10) = 8 × (10/4) = 20.
+
+Q: What is the median of: 3, 7, 9, 12, 15?
+A) 7
+B) 9
+C) 10
+D) 12
+ANSWER: B
+EXPLANATION: The median is the middle value when arranged in order, which is 9.
+
+Q: What is 2x + 5x?
+A) 3x
+B) 7x
+C) 10x
+D) 7x²
+ANSWER: B
+EXPLANATION: Combining like terms: 2x + 5x = 7x.
+
+Q: What is the area of a circle with radius 7cm? (Use π = 22/7)
+A) 44 cm²
+B) 88 cm²
+C) 132 cm²
+D) 154 cm²
+ANSWER: D
+EXPLANATION: Area = πr² = (22/7) × 7² = (22/7) × 49 = 154 cm².
+
+Q: If 3x = 15, what is x?
+A) 3
+B) 4
+C) 5
+D) 6
+ANSWER: C
+EXPLANATION: Dividing both sides by 3: x = 15 ÷ 3 = 5.
+
+Q: What is 45% as a decimal?
+A) 0.045
+B) 0.45
+C) 4.5
+D) 45
+ANSWER: B
+EXPLANATION: 45% = 45/100 = 0.45.
+
+Q: What is the mode of: 2, 5, 5, 7, 9?
+A) 2
+B) 5
+C) 7
+D) 9
+ANSWER: B
+EXPLANATION: The mode is the most frequently occurring value, which is 5.
+
+Q: What is √64 + √36?
+A) 10
+B) 12
+C) 14
+D) 16
+ANSWER: C
+EXPLANATION: √64 = 8 and √36 = 6, so 8 + 6 = 14.
+
+Q: What is the simple interest on $1000 at 5% per annum for 2 years?
+A) $50
+B) $75
+C) $100
+D) $150
+ANSWER: C
+EXPLANATION: Simple Interest = (P × R × T)/100 = (1000 × 5 × 2)/100 = $100.
+
+Q: What is 2/3 of 60?
+A) 20
+B) 30
+C) 40
+D) 50
+ANSWER: C
+EXPLANATION: 2/3 of 60 = (2/3) × 60 = 40.
+
+Q: What is the sum of interior angles in a pentagon?
+A) 360°
+B) 450°
+C) 540°
+D) 720°
+ANSWER: C
+EXPLANATION: Sum = (n-2) × 180° = (5-2) × 180° = 540°.
+
+Q: What is 10² - 8²?
+A) 24
+B) 32
+C) 36
+D) 64
+ANSWER: C
+EXPLANATION: 10² = 100, 8² = 64, so 100 - 64 = 36.
+
+Q: What is the ratio 20:30 in simplest form?
+A) 1:2
+B) 2:3
+C) 3:4
+D) 4:5
+ANSWER: B
+EXPLANATION: Dividing both by 10: 20:30 = 2:3.
+
+Q: What is 0.8 × 5?
+A) 2
+B) 3
+C) 4
+D) 5
+ANSWER: C
+EXPLANATION: 0.8 multiplied by 5 equals 4.
