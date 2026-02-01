@@ -12,7 +12,11 @@ import {
   X,
   Check,
   AlertCircle,
-  FileText
+  FileText,
+  GraduationCap,
+  TrendingUp,
+  ClipboardList,
+  Award
 } from 'lucide-react'
 import {
   getExams,
@@ -107,9 +111,13 @@ export default function AdminDashboard() {
     try {
       await createExam(examForm.name, examForm.description)
       setSuccess('Exam created successfully')
+      // Close modal immediately
       setShowExamModal(false)
       setExamForm({ name: '', description: '' })
-      loadData()
+      // Then reload data
+      setTimeout(() => {
+        loadData()
+      }, 300)
     } catch (err) {
       setError(err.message || 'Failed to create exam')
     } finally {
@@ -300,23 +308,23 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <GraduationCap className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-slate-900">Admin Dashboard</h1>
-                <p className="text-sm text-slate-600">Welcome, {user?.full_name}</p>
+                <h1 className="text-2xl font-bold text-slate-900">Prime Scholar</h1>
+                <p className="text-sm text-slate-600">Admin Dashboard • Welcome, {user?.full_name}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors font-medium text-slate-700"
             >
               <LogOut className="w-5 h-5" />
               <span className="hidden sm:inline">Logout</span>
@@ -326,22 +334,31 @@ export default function AdminDashboard() {
       </header>
 
       {/* Tabs */}
-      <div className="bg-white border-b border-slate-200">
+      <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-1">
-            {['exams', 'subjects', 'questions', 'results'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-3 font-medium capitalize transition-colors ${
-                  activeTab === tab
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
+          <div className="flex gap-2 overflow-x-auto">
+            {[
+              { key: 'exams', icon: Award, label: 'Exams' },
+              { key: 'subjects', icon: BookOpen, label: 'Subjects' },
+              { key: 'questions', icon: ClipboardList, label: 'Questions' },
+              { key: 'results', icon: BarChart3, label: 'Results' }
+            ].map((tab) => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`flex items-center gap-2 px-6 py-3 font-medium capitalize transition-all whitespace-nowrap ${
+                    activeTab === tab.key
+                      ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {tab.label}
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -372,11 +389,59 @@ export default function AdminDashboard() {
         {/* Exams Tab */}
         {activeTab === 'exams' && (
           <div>
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-slate-600 mb-1">Total Exams</p>
+                    <p className="text-3xl font-bold text-slate-900">{exams.length}</p>
+                  </div>
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Award className="w-6 h-6 text-blue-600" />
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-slate-600 mb-1">Subjects</p>
+                    <p className="text-3xl font-bold text-slate-900">{subjects.length}</p>
+                  </div>
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <BookOpen className="w-6 h-6 text-green-600" />
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-slate-600 mb-1">Total Attempts</p>
+                    <p className="text-3xl font-bold text-slate-900">{attempts.length}</p>
+                  </div>
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-slate-600 mb-1">Questions</p>
+                    <p className="text-3xl font-bold text-slate-900">{subjectQuestions.length}</p>
+                  </div>
+                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <ClipboardList className="w-6 h-6 text-orange-600" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900">Manage Exams</h2>
               <button
                 onClick={() => setShowExamModal(true)}
-                className="btn-primary flex items-center gap-2"
+                className="btn-primary flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
               >
                 <Plus className="w-5 h-5" />
                 <span>Add Exam</span>
@@ -385,13 +450,18 @@ export default function AdminDashboard() {
 
             <div className="grid gap-4">
               {exams.map((exam) => (
-                <div key={exam.id} className="card">
+                <div key={exam.id} className="card hover:shadow-lg transition-shadow cursor-pointer">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-900">{exam.name}</h3>
-                      {exam.description && (
-                        <p className="text-sm text-slate-600 mt-1">{exam.description}</p>
-                      )}
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-md">
+                        <Award className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-900">{exam.name}</h3>
+                        {exam.description && (
+                          <p className="text-sm text-slate-600 mt-1">{exam.description}</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -608,15 +678,18 @@ export default function AdminDashboard() {
             <form onSubmit={handleCreateExam}>
               <div className="space-y-4">
                 <div>
-                  <label className="label">Exam Name</label>
-                  <input
-                    type="text"
+                  <label className="label">Select Exam Type</label>
+                  <select
                     value={examForm.name}
                     onChange={(e) => setExamForm({ ...examForm, name: e.target.value })}
                     className="input"
-                    placeholder="e.g., WAEC"
                     required
-                  />
+                  >
+                    <option value="">-- Choose Exam --</option>
+                    <option value="WAEC">WAEC (West African Examinations Council)</option>
+                    <option value="JAMB">JAMB (Joint Admissions and Matriculation Board)</option>
+                    <option value="NECO">NECO (National Examinations Council)</option>
+                  </select>
                 </div>
                 <div>
                   <label className="label">Description (Optional)</label>

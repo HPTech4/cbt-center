@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BookOpen, LogIn, AlertCircle, GraduationCap } from 'lucide-react'
+import { BookOpen, LogIn, AlertCircle, GraduationCap, CheckCircle } from 'lucide-react'
 import { signIn } from '../services/supabaseClient'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -12,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   /**
    * Login handler (FIXED & STABLE)
@@ -31,12 +32,17 @@ export default function Login() {
       // Store in global auth context
       setUser({ ...user, ...profile })
 
-      // Role-based redirect
-      if (profile.role === 'admin') {
-        navigate('/admin')
-      } else {
-        navigate('/exams')
-      }
+      // Show success modal
+      setShowSuccessModal(true)
+
+      // Wait 1.5 seconds then redirect
+      setTimeout(() => {
+        if (profile.role === 'admin') {
+          navigate('/admin')
+        } else {
+          navigate('/exams')
+        }
+      }, 1500)
     } catch (err) {
       console.error('❌ Login error:', err)
 
@@ -186,6 +192,26 @@ export default function Login() {
         </div>
 
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full transform animate-[scale-in_0.3s_ease-out] text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
+              <CheckCircle className="w-12 h-12 text-green-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">
+              Login Successful!
+            </h3>
+            <p className="text-slate-600 mb-4">
+              Welcome back! Redirecting you now...
+            </p>
+            <div className="flex justify-center">
+              <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
