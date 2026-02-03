@@ -111,7 +111,7 @@ export default function AdminDashboard() {
     setLoading(true)
 
     try {
-      await createExam(examForm.name, examForm.description)
+      await createExam({ name: examForm.name, description: examForm.description })
       setSuccess('Exam created successfully')
       // Close modal immediately
       setShowExamModal(false)
@@ -121,7 +121,13 @@ export default function AdminDashboard() {
         loadData()
       }, 300)
     } catch (err) {
-      setError(err.message || 'Failed to create exam')
+      console.error('Create exam error:', err)
+      // Check for duplicate key error
+      if (err.message?.includes('duplicate key') || err.message?.includes('unique constraint')) {
+        setError(`An exam with the name "${examForm.name}" already exists. Please choose a different name.`)
+      } else {
+        setError(err.message || 'Failed to create exam')
+      }
     } finally {
       setLoading(false)
     }
@@ -135,17 +141,23 @@ export default function AdminDashboard() {
     setLoading(true)
 
     try {
-      await createSubject(
-        subjectForm.examId,
-        subjectForm.name,
-        parseInt(subjectForm.timeLimitMinutes)
-      )
+      await createSubject({
+        examId: subjectForm.examId,
+        name: subjectForm.name,
+        timeLimitMinutes: parseInt(subjectForm.timeLimitMinutes)
+      })
       setSuccess('Subject created successfully')
       setShowSubjectModal(false)
       setSubjectForm({ examId: '', name: '', timeLimitMinutes: 60 })
       loadData()
     } catch (err) {
-      setError(err.message || 'Failed to create subject')
+      console.error('Create subject error:', err)
+      // Check for duplicate key error
+      if (err.message?.includes('duplicate key') || err.message?.includes('unique constraint')) {
+        setError(`A subject with the name "${subjectForm.name}" already exists in this exam. Please choose a different name.`)
+      } else {
+        setError(err.message || 'Failed to create subject')
+      }
     } finally {
       setLoading(false)
     }
@@ -166,13 +178,8 @@ export default function AdminDashboard() {
         throw new Error('No valid questions found')
       }
 
-      // Add subject_id to each question
-      const questionsWithSubject = questionsArray.map(q => ({
-        ...q,
-        subject_id: questionUploadForm.subjectId
-      }))
-
-      await createQuestions(questionsWithSubject)
+      // createQuestions expects (subjectId, questions)
+      await createQuestions(questionUploadForm.subjectId, questionsArray)
       setSuccess(`${questionsArray.length} questions uploaded successfully`)
       setShowQuestionUploadModal(false)
       setQuestionUploadForm({ subjectId: '', questionsText: '' })

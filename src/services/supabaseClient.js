@@ -12,7 +12,7 @@ import { createClient } from "@supabase/supabase-js";
 // Hardcoded users for temporary testing
 const MOCK_USERS = {
   "admin@gmail.com": {
-    id: "mock-admin-id",
+    id: "00000000-0000-0000-0000-000000000001",
     email: "admin@gmail.com",
     password: "1234",
     role: "admin",
@@ -20,7 +20,7 @@ const MOCK_USERS = {
     created_at: new Date().toISOString(),
   },
   "student@gmail.com": {
-    id: "mock-student-id",
+    id: "00000000-0000-0000-0000-000000000002",
     email: "student@gmail.com",
     password: "1234",
     role: "student",

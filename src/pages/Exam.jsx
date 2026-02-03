@@ -170,9 +170,9 @@ export default function Exam() {
           </div>
         )}
 
-        <div className=\"grid lg:grid-cols-4 gap-3 sm:gap-6\">
+        <div className="grid lg:grid-cols-4 gap-3 sm:gap-6">
           {/* Question Area */}
-          <div className=\"lg:col-span-3\">
+          <div className="lg:col-span-3">
             <QuestionCard
               question={currentQuestion}
               questionNumber={currentQuestionIndex + 1}
@@ -181,18 +181,18 @@ export default function Exam() {
             />
 
             {/* Navigation Buttons */}
-            <div className=\"flex items-center justify-between gap-2 sm:gap-4 mt-4 sm:mt-6\">
+            <div className="flex items-center justify-between gap-2 sm:gap-4 mt-4 sm:mt-6">
               <button
                 onClick={handlePreviousQuestion}
                 disabled={currentQuestionIndex === 0}
-                className=\"btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex-1 text-sm sm:text-base\"
+                className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex-1 text-sm sm:text-base"
               >
                 Previous
               </button>
               <button
                 onClick={handleNextQuestion}
                 disabled={currentQuestionIndex === questions.length - 1}
-                className=\"btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex-1 text-sm sm:text-base\"
+                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex-1 text-sm sm:text-base"
               >
                 Next
               </button>
@@ -200,10 +200,10 @@ export default function Exam() {
           </div>
 
           {/* Question Navigator Sidebar */}
-          <div className=\"lg:col-span-1\">
-            <div className=\"card sticky top-24\">
-              <h3 className=\"font-semibold text-slate-900 mb-4 text-sm\">Questions</h3>
-              <div className=\"grid grid-cols-6 lg:grid-cols-4 gap-1 sm:gap-2 mb-4 sm:mb-6\">
+          <div className="lg:col-span-1">
+            <div className="card sticky top-24">
+              <h3 className="font-semibold text-slate-900 mb-4 text-sm">Questions</h3>
+              <div className="grid grid-cols-6 lg:grid-cols-4 gap-1 sm:gap-2 mb-4 sm:mb-6">
                 {questions.map((q, index) => (
                   <button
                     key={q.id}
@@ -224,9 +224,9 @@ export default function Exam() {
               <button
                 onClick={() => setShowSubmitConfirm(true)}
                 disabled={submitting}
-                className=\"btn-primary w-full flex items-center justify-center gap-2 text-sm sm:text-base\"
+                className="btn-primary w-full flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                <Send className=\"w-4 h-4 sm:w-5 sm:h-5\" />
+                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Submit</span>
               </button>
             </div>
@@ -236,17 +236,17 @@ export default function Exam() {
 
       {/* Submit Confirmation Modal */}
       {showSubmitConfirm && (
-        <div className=\"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto\">
-          <div className=\"bg-white rounded-xl shadow-xl max-w-md w-full p-4 sm:p-6 my-auto\">
-            <div className=\"flex items-start gap-3 sm:gap-4 mb-6\">
-              <div className=\"w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0\">
-                <AlertCircle className=\"w-5 h-5 sm:w-6 sm:h-6 text-amber-600\" />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-4 sm:p-6 my-auto">
+            <div className="flex items-start gap-3 sm:gap-4 mb-6">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
               </div>
-              <div className=\"min-w-0 flex-1\">
-                <h3 className=\"text-base sm:text-lg font-bold text-slate-900 mb-2\">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2">
                   Submit Exam?
                 </h3>
-                <p className=\"text-slate-600 text-xs sm:text-sm\">
+                <p className="text-slate-600 text-xs sm:text-sm">
                   You answered {getAnsweredCount()}/{questions.length}. Cannot change answers after.
                   Once submitted, you cannot change your answers.
                 </p>

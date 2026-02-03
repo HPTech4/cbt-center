@@ -20,10 +20,14 @@ export default function SubjectSelect() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    loadSubjects()
-  }, [examId])
+    if (user) {
+      loadSubjects()
+    }
+  }, [examId, user])
 
   const loadSubjects = async () => {
+    if (!user) return
+    
     try {
       const data = await getSubjects(examId)
       setSubjects(data)
@@ -46,6 +50,11 @@ export default function SubjectSelect() {
   }
 
   const handleStartExam = async (subjectId, subjectName) => {
+    if (!user) {
+      setError('Please log in to start an exam.')
+      return
+    }
+    
     if (attemptedSubjects.has(subjectId)) {
       return
     }
@@ -63,7 +72,7 @@ export default function SubjectSelect() {
     }
   }
 
-  if (loading) {
+  if (!user || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
