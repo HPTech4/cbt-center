@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 // Pages
 import Login from './pages/Login'
+import Welcome from './pages/Welcome'
 import ExamSelect from './pages/ExamSelect'
 import SubjectSelect from './pages/SubjectSelect'
 import Exam from './pages/Exam'
@@ -25,6 +26,22 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           {/* Student Routes */}
+          <Route
+            path="/welcome"
+            element={
+              <ProtectedRoute requireRole="student">
+                <Welcome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/exam-select"
+            element={
+              <ProtectedRoute requireRole="student">
+                <ExamSelect />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/exams"
             element={

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BookOpen, Clock, ArrowLeft, AlertCircle, PlayCircle, GraduationCap } from 'lucide-react'
-import { getSubjects, hasAttemptedSubject, createAttempt } from '../services/supabaseClient'
+import { getSubjects, createAttempt } from '../services/supabaseClient'
 import { useAuth } from '../contexts/AuthContext'
 
 /**
@@ -14,7 +14,6 @@ export default function SubjectSelect() {
   const { examId } = useParams()
   const { user } = useAuth()
   const [subjects, setSubjects] = useState([])
-  const [attemptedSubjects, setAttemptedSubjects] = useState(new Set())
   const [loading, setLoading] = useState(true)
   const [startingAttempt, setStartingAttempt] = useState(null)
   const [error, setError] = useState('')
@@ -31,16 +30,7 @@ export default function SubjectSelect() {
     try {
       const data = await getSubjects(examId)
       setSubjects(data)
-
-      // Check which subjects have been attempted
-      const attempted = new Set()
-      for (const subject of data) {
-        const hasAttempted = await hasAttemptedSubject(user.id, subject.id)
-        if (hasAttempted) {
-          attempted.add(subject.id)
-        }
-      }
-      setAttemptedSubjects(attempted)
+      
     } catch (err) {
       console.error('Failed to load subjects:', err)
       setError('Failed to load subjects. Please try again.')
@@ -55,9 +45,7 @@ export default function SubjectSelect() {
       return
     }
     
-    if (attemptedSubjects.has(subjectId)) {
-      return
-    }
+   
 
     setStartingAttempt(subjectId)
     setError('')
@@ -124,17 +112,12 @@ export default function SubjectSelect() {
         ) : (
           <div className="grid gap-3 sm:gap-6">
             {subjects.map((subject) => {
-              const isAttempted = attemptedSubjects.has(subject.id)
               const isStarting = startingAttempt === subject.id
 
               return (
                 <div
                   key={subject.id}
-                  className={`card ${
-                    isAttempted
-                      ? 'opacity-60 bg-slate-50'
-                      : 'hover:shadow-lg hover:border-blue-300 transition-all duration-200'
-                  }`}
+                  className="card hover:shadow-lg hover:border-blue-300 transition-all duration-200"
                 >
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
@@ -142,11 +125,7 @@ export default function SubjectSelect() {
                         <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                           {subject.name}
                         </h3>
-                        {isAttempted && (
-                          <span className="px-2 sm:px-3 py-1 bg-slate-200 text-slate-600 rounded-full text-xs font-medium whitespace-nowrap">
-                            Attempted
-                          </span>
-                        )}
+                       
                       </div>
                       <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
                         <Clock className="w-4 h-4 flex-shrink-0" />
@@ -157,9 +136,9 @@ export default function SubjectSelect() {
                     </div>
                     <button
                       onClick={() => handleStartExam(subject.id, subject.name)}
-                      disabled={isAttempted || isStarting}
+                      disabled={isStarting}
                       className={`btn-primary w-full sm:w-auto flex items-center justify-center gap-2 text-sm sm:text-base flex-shrink-0 ${
-                        isAttempted || isStarting ? 'opacity-50 cursor-not-allowed' : ''
+                        isStarting ? 'opacity-50 cursor-not-allowed' : ''
                       }`}
                     >
                       {isStarting ? (
@@ -188,7 +167,6 @@ export default function SubjectSelect() {
             <div className="min-w-0 flex-1">
               <h3 className="font-semibold text-amber-900 mb-2 text-sm sm:text-base">Before You Start:</h3>
               <ul className="space-y-1 text-xs sm:text-sm text-amber-800">
-                <li>• You can only attempt each subject once per session</li>
                 <li>• The timer will start immediately when you click "Start Practice"</li>
                 <li>• Make sure you have a stable internet connection</li>
                 <li>• You cannot pause the exam once started</li>

@@ -40,7 +40,7 @@ export default function Login() {
         if (profile.role === 'admin') {
           navigate('/admin')
         } else {
-          navigate('/exams')
+          navigate('/welcome')
         }
       }, 1500)
     } catch (err) {

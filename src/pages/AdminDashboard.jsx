@@ -83,6 +83,14 @@ export default function AdminDashboard() {
         setSubjects(subjectsData)
       } else if (activeTab === 'results') {
         const attemptsData = await getAllAttempts()
+        console.log('📊 Admin Results - Loaded attempts:', attemptsData.map(a => ({
+          id: a.id,
+          student: a.users?.full_name,
+          subject: a.subjects?.name,
+          score: a.score,
+          total: a.total_questions,
+          percentage: Math.round((a.score / a.total_questions) * 100)
+        })))
         setAttempts(attemptsData)
       }
     } catch (err) {

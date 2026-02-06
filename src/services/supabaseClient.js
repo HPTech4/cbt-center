@@ -388,12 +388,10 @@ export const getAttemptResult = async (attemptId) => {
     };
   });
 
-  const score = Math.round((correctCount / questions.length) * 100);
-
   return {
     attempt: {
       ...attempt,
-      score,
+      score: correctCount,  // Override any DB score with calculated score
       correct_count: correctCount,
       total_questions: questions.length,
     },
@@ -464,13 +462,56 @@ export const getQuestionsBySubject = async (subjectId) => {
 };
 
 export const getAllAttempts = async () => {
-  const { data, error } = await supabase
+  // Get all attempts with related data
+  const { data: attempts, error } = await supabase
     .from("attempts")
-    .select("*")
-    .order("created_at", { ascending: false });
+    .select(`
+      *,
+      users(full_name),
+      subjects(
+        name,
+        exams(name)
+      )
+    `)
+    .not("submitted_at", "is", null)
+    .order("submitted_at", { ascending: false });
 
   if (error) throw error;
-  return data;
+
+  // Calculate correct score for each attempt
+  const attemptsWithScores = await Promise.all(
+    attempts.map(async (attempt) => {
+      // Get questions and answers for this attempt
+      const { data: attemptQuestions } = await supabase
+        .from("attempt_questions")
+        .select("question_id, questions(correct_option)")
+        .eq("attempt_id", attempt.id);
+
+      const { data: answers } = await supabase
+        .from("answers")
+        .select("question_id, selected_option")
+        .eq("attempt_id", attempt.id);
+
+      // Calculate correct count
+      let correctCount = 0;
+      if (attemptQuestions && answers) {
+        attemptQuestions.forEach((aq) => {
+          const answer = answers.find((a) => a.question_id === aq.question_id);
+          if (answer?.selected_option === aq.questions?.correct_option) {
+            correctCount++;
+          }
+        });
+      }
+
+      return {
+        ...attempt,
+        score: correctCount,
+        total_questions: attemptQuestions?.length || 0,
+      };
+    })
+  );
+
+  return attemptsWithScores;
 };
 
 export const deleteQuestion = async (questionId) => {

@@ -22,6 +22,10 @@ export default function Result() {
   const loadResult = async () => {
     try {
       const data = await getAttemptResult(attemptId)
+      console.log('Result data:', data)
+      console.log('Score:', data.attempt.score)
+      console.log('Total questions:', data.attempt.total_questions)
+      console.log('Calculated percentage:', Math.round((data.attempt.score / data.attempt.total_questions) * 100))
       setResult(data)
     } catch (err) {
       console.error('Failed to load result:', err)
